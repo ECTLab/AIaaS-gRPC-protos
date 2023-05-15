@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package test;
+
+message Treq {
+    string n = 1;
+}
+
+message Tres {
+    bool ok = 1;
+}
+
+service Test {
+    rpc tt (Treq) returns (Tres);
+}
