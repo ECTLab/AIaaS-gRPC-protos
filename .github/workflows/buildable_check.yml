@@ -1,0 +1,20 @@
+name: Check that new changes can build or not
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      
+      - name: Install dependencies
+        run: |
+          make install_python_requirements
+      
+      - name: Build
+        run: |
+          make generate_python_protos
