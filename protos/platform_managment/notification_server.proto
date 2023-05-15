@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package platform_managment;
+
+
+message SendEmailRequest {
+    string email = 1;
+    string subject = 2;
+    string body_text = 3;
+}
+
+message SendEmailResponse { // empty message
+}
+
+
+service NotificationServer {
+    rpc SendEmail (SendEmailRequest) returns (SendEmailResponse);
+}
