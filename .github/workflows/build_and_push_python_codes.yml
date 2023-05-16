@@ -14,7 +14,7 @@ env:
   DESTINATION_TOKEN: ${{ secrets.PYTHON_DESTINATION_TOKEN }}
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
