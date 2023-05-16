@@ -5,7 +5,7 @@ PYTHON_REQUIREMENTS_FILE_PATH=./requirements.txt
 
 clean:
 	rm -rf $(PYTHON_PROTOS_OUTPUT_DIR)
-	rm .version
+	rm -f .version
 
 set_new_version_tag:
 	bash ./scripts/generate_new_version_tag.sh
