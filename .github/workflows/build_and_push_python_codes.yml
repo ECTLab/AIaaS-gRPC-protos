@@ -46,11 +46,15 @@ jobs:
 
       - name: Commit changes
         run: |
+          export TAG_NAME=$(basename ${{ github.ref }})
+          bash -c "if [[ ${{ github.ref }} == 'master' ]]; then export TAG_NAME=${{ github.event.client_payload.tag_name }}; fi"
+          echo "Tag name: $TAG_NAME"
+          echo "payload: ${{ github.event.client_payload.tag_name }}"
           cd destination-repo
           git config user.email "m.mahdi.m79@gmail.com"
           git config user.name "Mohammad Mahdi Malmasi"
           git add .
-          git commit -m "Update for tag: $(basename ${{ github.ref }})"
-          git tag $(basename ${{ github.ref }})
+          git commit -m "Update for tag: $TAG_NAME"
+          git tag $TAG_NAME
           git push --tags
           git push origin master
