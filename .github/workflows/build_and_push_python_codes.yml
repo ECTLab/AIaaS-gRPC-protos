@@ -14,7 +14,7 @@ env:
   DESTINATION_TOKEN: ${{ secrets.PYTHON_DESTINATION_TOKEN }}
 
 jobs:
-  build_and_push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -29,7 +29,7 @@ jobs:
       - name: Build
         run: |
           make generate_python_protos
-      
+
       - name: Checkout destination repo
         uses: actions/checkout@v2
         with:
@@ -46,8 +46,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          export TAG_NAME=$(basename ${{ github.ref }})
-          bash -c "if [[ ${{ github.ref }} == 'master' ]]; then export TAG_NAME=${{ github.event.client_payload.tag_name }}; fi"
+          bash -c "if [[ ${{ github.ref }} == 'refs/tags/'* ]]; then export TAG_NAME=${{ github.ref }}; fi"
           echo "Tag name: $TAG_NAME"
           echo "payload: ${{ github.event.client_payload.tag_name }}"
           cd destination-repo
@@ -58,3 +57,5 @@ jobs:
           git tag $TAG_NAME
           git push --tags
           git push origin master
+        env:
+          TAG_NAME: ${{ github.event.client_payload.tag_name }}
