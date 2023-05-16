@@ -9,4 +9,6 @@ NEXT_DIGIT=$((LAST_DIGIT + 1))
 
 NEW_TAG=$(echo "$LAST_TAG" | sed "s/\.[0-9]*$/.$NEXT_DIGIT/")
 
-echo "$NEW_TAG" > .version
+git checkout master
+git tag "$NEW_TAG"
+git push origin "$NEW_TAG"
