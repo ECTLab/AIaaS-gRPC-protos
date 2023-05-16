@@ -9,9 +9,6 @@ clean:
 set_new_version_tag:
 	bash ./scripts/generate_new_version_tag.sh
 
-trigger_build_CIs:
-	bash ./scripts/trigger_build_CIs.sh $(filter-out $@,$(MAKECMDGOALS))
-
 install_python_requirements:
 	pip install -r $(PYTHON_REQUIREMENTS_FILE_PATH)
 
