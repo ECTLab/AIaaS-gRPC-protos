@@ -12,7 +12,7 @@ set_new_version_tag:
 	bash ./scripts/generate_new_version_tag.sh
 	echo "New version tag generated"
 	git checkout master
-	git tag "$(shell cat $(VERSION_FILE_PATH))"
+	git tag "$(cat $(VERSION_FILE_PATH))"
 	git push --tags
 	rm -f $(VERSION_FILE_PATH)
 
