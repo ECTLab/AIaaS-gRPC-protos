@@ -1,0 +1,16 @@
+name: Set New Version Tag
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  set_version_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Set Version Tag
+        run: |
+          make set_new_version_tag
