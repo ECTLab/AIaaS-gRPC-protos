@@ -1,9 +1,12 @@
 name: Set New Version Tag
 
 on:
-  push:
+  pull_request:
     branches:
       - master
+    types: [closed]
+    paths:
+      - 'protos/**'
 
 jobs:
   set-version-tag:
