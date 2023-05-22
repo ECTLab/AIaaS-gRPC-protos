@@ -15,8 +15,8 @@ install_python_requirements:
 
 install_golang_requirements:
 	sudo apt-get update && sudo apt-get install -y protobuf-compiler
-	go install google.golang.org/protobuf/cmd/protoc-gen-go
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 generate_python_protos: clean install_python_requirements
 	mkdir $(PYTHON_PROTOS_OUTPUT_DIR)
