@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package platform_managment;
+package notification_server;
 
 
 message SendEmailRequest {
@@ -13,6 +13,6 @@ message SendEmailResponse { // empty message
 }
 
 
-service NotificationServer {
+service NotificationEmail {
     rpc SendEmail (SendEmailRequest) returns (SendEmailResponse);
 }
