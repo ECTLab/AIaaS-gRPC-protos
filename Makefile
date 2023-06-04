@@ -7,6 +7,7 @@ PYTHON_SCRIPTS_DIR=$(SCRIPTS_DIR)/python
 PYTHON_PROTOS_OUTPUT_DIR=./AIaaS_interface
 PYTHON_REQUIREMENTS_FILE_PATH=./requirements.txt
 PYTHON_STUBS_OUTPUT_DIR=$(PYTHON_PROTOS_OUTPUT_DIR)
+PYTHON_STUBS_CONFIGS_CHECKER_SCRIPT=$(PYTHON_SCRIPTS_DIR)/check_stubs_configs.py
 PYTHON_STUBS_GENERATOR_SCRIPT=$(PYTHON_SCRIPTS_DIR)/generate_python_stubs_file.py
 STUBS_OUTPUT_FILE_PATH=$(PYTHON_STUBS_OUTPUT_DIR)/stubs.py
 TEMPLATE_OUTPUT_FILE_PATH=$(TEXT_FILES_DIR)/stubs_py_template.txt
@@ -21,6 +22,13 @@ set_new_version_tag:
 
 install_python_requirements:
 	pip install -r $(PYTHON_REQUIREMENTS_FILE_PATH)
+
+check_stubs_configs_file:
+	python \
+		$(PYTHON_STUBS_CONFIGS_CHECKER_SCRIPT) \
+		$(STUBS_CONFIGS_FILE) \
+		$(PYTHON_PROTOS_OUTPUT_DIR) \
+		$(PROTOS_DIR)
 
 generate_python_protos: clean install_python_requirements
 	@mkdir $(PYTHON_PROTOS_OUTPUT_DIR)
