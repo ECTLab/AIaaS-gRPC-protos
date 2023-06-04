@@ -1,0 +1,9 @@
+{{ import libraries code }}
+
+
+{{ Services class code }}
+
+
+def get_stub(config: dict):
+    channel = grpc.insecure_channel(config['$HOST_KEY'] + ':' + str(config['$PORT_KEY']))
+    return config['$STUB_CLASS_KEY'](channel)

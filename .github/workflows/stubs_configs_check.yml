@@ -1,0 +1,20 @@
+name: Check stubs configs json file
+
+on:
+  push:
+    branches:
+        - '*'
+        - '!master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+            ref: ${{ github.ref }}
+      
+      - name: Check stubs configs json file
+        run: |
+            make check_stubs_configs_file  
