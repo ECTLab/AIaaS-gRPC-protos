@@ -8,6 +8,7 @@ on:
     paths:
       - 'protos/**'
       - '**/*python*'
+      - 'stubs/**'
 
 jobs:
   set-version-tag:
