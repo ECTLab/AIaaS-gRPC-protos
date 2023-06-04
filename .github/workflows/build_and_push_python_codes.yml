@@ -29,6 +29,7 @@ jobs:
       - name: Build
         run: |
           make generate_python_protos
+          make generate_python_stubs
 
       - name: Checkout destination repo
         uses: actions/checkout@v2
