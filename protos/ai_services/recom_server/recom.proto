@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package recom_server;
+
+service TrainModel {
+    rpc CreateModel(CreateModelRequest) returns (CreateModelResponse);
+    rpc LoadCsv(LoadCsvRequest) returns (LoadCsvResponse);
+    rpc StartColdstart(StartColdstartRequest) returns (StartColdstartResponse);
+    rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
+    rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
+}
+
+service InferenceModel{
+    rpc Coldstart(ColdstartRequest) returns (ColdstartResponse);
+    rpc Similaritems(SimilaritemsRequest) returns (SimilaritemsResponse);
+    rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
+}
+
+message CreateModelRequest {
+    int UserID = 1;
+    string ModelName = 2;
+}
