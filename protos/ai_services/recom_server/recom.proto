@@ -3,15 +3,11 @@ import "google/protobuf/struct.proto";
 
 package recom_server;
 
-service TrainModel {
+service RecomaaS {
     rpc CreateModel(CreateModelRequest) returns (CreateModelResponse);
-    // rpc LoadCsv(LoadCsvRequest) returns (LoadCsvResponse);
     rpc StartColdstart(StartColdstartRequest) returns (StartColdstartResponse);
     rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
     rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
-}
-
-service InferenceModel{
     rpc Coldstart(ColdstartRequest) returns (ColdstartResponse);
     rpc Similaritems(SimilaritemsRequest) returns (SimilaritemsResponse);
     rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
@@ -22,17 +18,19 @@ message CreateModelRequest {
     string modelName = 2;
     bool verbose =3;
 }
+
 message CreateModelResponse {
     int32 modelID = 1;
 }
+
 message StartColdstartRequest {
     int32 userID = 1;
     int32 modelID = 2;
     string dataDir = 3;
     bool verbose = 4;
 }
-message StartColdstartResponse{
-    string status =3;
+
+message StartColdstartResponse{  // empty message
 }
 
 message StartSimilaritemsRequest {
@@ -46,8 +44,8 @@ message StartSimilaritemsRequest {
     google.protobuf.Struct sim_options = 8;
     google.protobuf.Struct bsl_options = 9;
 }
-message StartSimilaritemsResponse{
-    string status =3;
+
+message StartSimilaritemsResponse{ // empty message
 }
 
 message StartUserspecificRequest {
@@ -59,8 +57,8 @@ message StartUserspecificRequest {
     int k_start = 6;
     int k_end = 7;
 }
-message StartUserspecificResponse{
-    string status = 3;
+
+message StartUserspecificResponse{ // empty message
 }
 message ColdstartRequest{
     int32 userID = 1;
@@ -68,11 +66,13 @@ message ColdstartRequest{
     bool verbose = 3;
     int n = 4;
 }
+
 message ColdstartItem{
     int itemID = 1;
     string movieTitle = 2;
     int rate = 3;
 }
+
 message ColdstartResponse{
     repeated ColdstartItem Items = 1;
 }
@@ -84,10 +84,12 @@ message SimilaritemsRequest{
     int n = 4;
     str item_name = 5;
 }
+
 message SimilaritemsItem{
     int itemID = 1;
     string movieTitle = 2;
 }
+
 message SimilaritemsResponse{
     repeated SimilaritemsItem Items = 1;
 }
@@ -98,11 +100,13 @@ message UserspecificRequest{
     bool verbose = 3;
     int n = 4;
 }
+
 message UserspecificItem{
     int itemID = 1;
     string movieTitle = 2;
     int rate = 3;
 }
+
 message UserspecificResponse {
     repeated UserspecificItem items =1;
 }
