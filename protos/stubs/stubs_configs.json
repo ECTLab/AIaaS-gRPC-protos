@@ -15,7 +15,7 @@
             "name": "RecomaaS",
             "proto_file_path": "protos/ai_services/recom_server/recom.proto",
             "host": "0.0.0.0",
-            "port": 50100
+            "port": 50052
         }
     ]
 }
