@@ -10,6 +10,12 @@
             "proto_file_path": "protos/platform_management/notification_server/email.proto",
             "host": "0.0.0.0",
             "port": 50051
+        },
+        {
+            "name": "RecomaaS",
+            "proto_file_path": "protos/ai_services/recom_server/recom.proto",
+            "host": "0.0.0.0",
+            "port": 50100
         }
     ]
 }
