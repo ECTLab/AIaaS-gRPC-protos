@@ -7,7 +7,7 @@ on:
         - '!master'
 
 jobs:
-  build:
+  check_stubs_configs_file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
