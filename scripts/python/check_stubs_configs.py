@@ -1,3 +1,5 @@
+import os
+import fnmatch
 import sys
 import json
 import re
@@ -50,6 +52,7 @@ if __name__ == '__main__':
     stubs_configs_file_path = sys.argv[1]
     protos_output_folder = sys.argv[2].split('/')[1]
     protos_folder = sys.argv[3].split('/')[1]
+    print(f'protos folder: {protos_folder}')
 
     # read stubs configs file
     stubs_json_dict = json.loads(open(stubs_configs_file_path, 'r').read())
@@ -81,6 +84,22 @@ if __name__ == '__main__':
         if service_config['name'] in implemented_services:
             raise Exception('service name must be unique!')
         implemented_services.append(service_config['name'])
+
+
+    proto_files = []
+    for root, dirnames, filenames in os.walk(protos_folder):
+        for filename in fnmatch.filter(filenames, '*.proto'):
+            proto_files.append(os.path.join(root, filename))
+
+    for proto_file in proto_files:
+        with open(proto_file, 'r') as f:
+            proto_file_text = f.read()
+            if 'service' not in proto_file_text:
+                continue
+
+            service_name = re.search(r'service\s+(.+)\s*{', proto_file_text).group(1).strip()
+            if service_name not in implemented_services:
+                raise Exception(f'{service_name} is not added in stubs configs!')
 
 
     print('\n\nstubs configs file is valid ✅')
