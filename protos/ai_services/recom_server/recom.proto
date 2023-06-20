@@ -1,10 +1,13 @@
 syntax = "proto3";
+
 import "google/protobuf/struct.proto";
+
 
 package recom_server;
 
+
 service RecomaaS {
-    rpc CreateModel(CreateModelRequest) returns (CreateModelResponse);
+    rpc CreateModel(CreateModelRequest) returns (CreateModelResponse); 
     rpc StartColdstart(StartColdstartRequest) returns (StartColdstartResponse);
     rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
     rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
@@ -13,100 +16,98 @@ service RecomaaS {
     rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
 }
 
-message CreateModelRequest {
-    int32 userID = 1;
-    string modelName = 2;
-    bool verbose =3;
+message ModelProperties {
+    int32 user_id = 1;
+    int32 model_name = 2;
 }
 
-message CreateModelResponse {
-    int32 modelID = 1;
+message CreateModelRequest {
+    ModelProperties model = 1;
+    bool verbose = 2;
+}
+
+message CreateModelResponse { // empty message
 }
 
 message StartColdstartRequest {
-    int32 userID = 1;
-    int32 modelID = 2;
-    string dataDir = 3;
-    bool verbose = 4;
+    ModelProperties model = 1;
+    string data_dir = 2;
+    bool verbose = 3;
 }
 
 message StartColdstartResponse{  // empty message
 }
 
 message StartSimilaritemsRequest {
-    int32 userID = 1;
-    int32 modelID = 2;
-    string dataDir = 3;
-    string algo = 4;
-    bool verbose = 5;
-    int k = 6;
-    int min_k=7;
-    google.protobuf.Struct sim_options = 8;
-    google.protobuf.Struct bsl_options = 9;
+    ModelProperties model = 1;
+    string data_dir = 2;
+    string algo = 3;
+    bool verbose = 4;
+    int k = 5;
+    int min_k = 6;
+    google.protobuf.Struct sim_options = 7;
+    google.protobuf.Struct bsl_options = 8;
 }
 
 message StartSimilaritemsResponse{ // empty message
 }
 
 message StartUserspecificRequest {
-    int32 userID = 1;
-    int32 modelID = 2;
-    string dataDir = 3;
-    bool verbose = 4;
-    int k = 5;
-    int k_start = 6;
-    int k_end = 7;
+    ModelProperties model = 1;
+    string data_dir = 2;
+    bool verbose = 3;
+    int k = 4;
+    int k_start = 5;
+    int k_end = 6;
 }
 
 message StartUserspecificResponse{ // empty message
 }
+
 message ColdstartRequest{
-    int32 userID = 1;
-    int32 modelID = 2;
-    bool verbose = 3;
-    int n = 4;
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
 }
 
 message ColdstartItem{
-    int itemID = 1;
-    string movieTitle = 2;
+    int item_id = 1;
+    string movie_title = 2;
     int rate = 3;
 }
 
 message ColdstartResponse{
-    repeated ColdstartItem Items = 1;
+    repeated ColdstartItem items = 1;
 }
 
 message SimilaritemsRequest{
-    int32 userID = 1;
-    int32 modelID = 2;
-    bool verbose = 3;
-    int n = 4;
-    str item_name = 5;
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
+    str item_name = 4;
 }
 
 message SimilaritemsItem{
-    int itemID = 1;
-    string movieTitle = 2;
+    int item_id = 1;
+    string movie_title = 2;
 }
 
 message SimilaritemsResponse{
-    repeated SimilaritemsItem Items = 1;
+    repeated SimilaritemsItem items = 1;
 }
 
 message UserspecificRequest{
-    int32 userID = 1;
-    int32 modelID = 2;
-    bool verbose = 3;
-    int n = 4;
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
 }
 
 message UserspecificItem{
-    int itemID = 1;
-    string movieTitle = 2;
+    int item_id = 1;
+    string movie_title = 2;
     int rate = 3;
 }
 
 message UserspecificResponse {
-    repeated UserspecificItem items =1;
+    repeated UserspecificItem items = 1;
 }
