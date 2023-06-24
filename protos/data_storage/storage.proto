@@ -3,18 +3,13 @@ syntax = "proto3";
 package data_storage;
 
 
-message ActionResult {
-    bool successful = 1; 
-    string message = 2;
-}
-
 message RegisterUserRequest {
     string username = 1;
     int64 initial_volume = 2; 
 }
 
 message RegisterUserResponse { 
-    ActionResult result = 1;
+    string message = 1;
 }
 
 message SetVolumeRequest {
@@ -23,7 +18,7 @@ message SetVolumeRequest {
 }
 
 message SetVolumeResponse { 
-    ActionResult result = 1;
+    string message = 1;
 }
 
 message GetVolumeRequest {
@@ -31,7 +26,7 @@ message GetVolumeRequest {
 }
 
 message GetVolumeResponse { 
-    ActionResult result = 1;
+    string message = 1;
     int64 total_volume_in_bytes = 2;
     int64 used_volume_in_bytes = 3;
     int64 remainging_volume_in_bytes = 4;
@@ -45,7 +40,7 @@ message CreateFolderRequest {
 }
 
 message CreateFolderResponse {
-    ActionResult result = 1;
+    string message = 1;
     string path = 2;
 }
 
@@ -55,7 +50,7 @@ message RemoveFolderRequest {
 }
 
 message RemoveFolderResponse {
-    ActionResult result = 1; 
+    string message = 1;
 }
 
 message ForceRemoveFolderRequest {
@@ -64,7 +59,7 @@ message ForceRemoveFolderRequest {
 }
 
 message ForceRemoveFolderResponse {
-    ActionResult result = 1;
+    string message = 1;
 }
 
 message RemoveFileRequest {
@@ -73,7 +68,7 @@ message RemoveFileRequest {
 }
 
 message RemoveFileResponse {
-    ActionResult result = 1;
+    string message = 1;
 }
 
 message EmptyRecycleBinRequest {
@@ -81,7 +76,7 @@ message EmptyRecycleBinRequest {
 }
 
 message EmptyRecycleBinResponse { 
-    ActionResult result = 1; 
+    string message = 1; 
 }
 
 message BrowseDataRequest {
@@ -90,28 +85,24 @@ message BrowseDataRequest {
 }
 
 message BrowseDataResponse { 
-    ActionResult result = 1;
+    string message = 1;
     repeated string contents = 2;
 }
 
-message GetSystemicReportRequest {
-
-}
+message GetSystemicReportRequest {}
 
 message GetSystemicReportResponse {
-    ActionResult result = 1;
+    string message = 1;
     int64 number_of_users = 2;
     int64 total_volume_in_bytes = 3;
     int64 used_volume_in_bytes = 4;
     int64 remainging_volume_in_bytes = 5;
 }
 
-message GetUsersVolumeReportRequest {
-
-}
+message GetUsersVolumeReportRequest {}
 
 message GetUsersVolumeReportResponse { 
-    ActionResult result = 1;
+    string message = 1;
     string average_cpu_load = 2;
     string total_cpu_power = 3;
     string average_ram_utilization = 4;
@@ -122,19 +113,21 @@ message GetUsersVolumeReportResponse {
 }
 
 message MetaData {
-    string filename = 1;
-    string extension = 2;
+    string username = 1;
+    string path = 2;
+    string filename = 3;
+    string extension = 4;
   }
 
 message UploadFileRequest {
     oneof request {
-        MetaData metadata = 1;
-        bytes chunk_data = 2;
+        MetaData metadata = 2;
+        bytes chunk_data = 3;
     }
 }
 
 message UploadFileResponse {
-    ActionResult result = 1;
+    string message = 1;
     string path = 2;
 }
 
@@ -147,6 +140,25 @@ message DownloadFileResponse {
     bytes chunk_data = 1;
 }
 
+message CopyRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CopyResponse {
+    string message = 1;
+}
+
+message CutRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CutResponse {
+    string message = 1;
+}
 
 // Interface exported by the server.
 service DataStorage {
@@ -225,6 +237,14 @@ service DataStorage {
     // A simple RPC used for getting the userReport data for all the users registered 
     // in the system. 
     rpc GetUsersVolumeReport (GetUsersVolumeReportRequest) returns (GetUsersVolumeReportResponse);
+
+    // A simple rpc used for copying the contents 
+    // from source path to the destination path.
+    rpc Copy (CopyRequest) returns (CopyResponse);
+
+    // A simple rpc used for cutting the content from 
+    // source path and pasting in the destination path.
+    rpc Cut (CutRequest) returns (CutResponse);
 
     // A server-to-client RPC, used for downloading the specified file. 
     // The following content should be provided for data download. 
