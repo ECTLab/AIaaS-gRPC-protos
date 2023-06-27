@@ -43,8 +43,8 @@ message StartSimilaritemsRequest {
     string data_dir = 2;
     string algo = 3;
     bool verbose = 4;
-    int k = 5;
-    int min_k = 6;
+    int32 k = 5;
+    int32 min_k = 6;
     google.protobuf.Struct sim_options = 7;
     google.protobuf.Struct bsl_options = 8;
 }
@@ -56,9 +56,9 @@ message StartUserspecificRequest {
     ModelProperties model = 1;
     string data_dir = 2;
     bool verbose = 3;
-    int k = 4;
-    int k_start = 5;
-    int k_end = 6;
+    int32 k = 4;
+    int32 k_start = 5;
+    int32 k_end = 6;
 }
 
 message StartUserspecificResponse{ // empty message
@@ -67,13 +67,13 @@ message StartUserspecificResponse{ // empty message
 message ColdstartRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int n = 3;
+    int32 n = 3;
 }
 
 message ColdstartItem{
-    int item_id = 1;
+    int32 item_id = 1;
     string movie_title = 2;
-    int rate = 3;
+    int32 rate = 3;
 }
 
 message ColdstartResponse{
@@ -83,12 +83,12 @@ message ColdstartResponse{
 message SimilaritemsRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int n = 3;
-    str item_name = 4;
+    int32 n = 3;
+    string item_name = 4;
 }
 
 message SimilaritemsItem{
-    int item_id = 1;
+    int32 item_id = 1;
     string movie_title = 2;
 }
 
@@ -99,13 +99,13 @@ message SimilaritemsResponse{
 message UserspecificRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int n = 3;
+    int32 n = 3;
 }
 
 message UserspecificItem{
-    int item_id = 1;
+    int32 item_id = 1;
     string movie_title = 2;
-    int rate = 3;
+    int32 rate = 3;
 }
 
 message UserspecificResponse {
