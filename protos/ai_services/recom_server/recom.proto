@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+
+package recom_server;
+
+
+service RecomaaS {
+    rpc CreateModel(CreateModelRequest) returns (CreateModelResponse); 
+    rpc StartColdstart(StartColdstartRequest) returns (StartColdstartResponse);
+    rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
+    rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
+    rpc Coldstart(ColdstartRequest) returns (ColdstartResponse);
+    rpc Similaritems(SimilaritemsRequest) returns (SimilaritemsResponse);
+    rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
+}
+
+message ModelProperties {
+    int32 user_id = 1;
+    int32 model_name = 2;
+}
+
+message CreateModelRequest {
+    ModelProperties model = 1;
+    bool verbose = 2;
+}
+
+message CreateModelResponse { // empty message
+}
+
+message StartColdstartRequest {
+    ModelProperties model = 1;
+    string data_dir = 2;
+    bool verbose = 3;
+}
+
+message StartColdstartResponse{  // empty message
+}
+
+message StartSimilaritemsRequest {
+    ModelProperties model = 1;
+    string data_dir = 2;
+    string algo = 3;
+    bool verbose = 4;
+    int k = 5;
+    int min_k = 6;
+    google.protobuf.Struct sim_options = 7;
+    google.protobuf.Struct bsl_options = 8;
+}
+
+message StartSimilaritemsResponse{ // empty message
+}
+
+message StartUserspecificRequest {
+    ModelProperties model = 1;
+    string data_dir = 2;
+    bool verbose = 3;
+    int k = 4;
+    int k_start = 5;
+    int k_end = 6;
+}
+
+message StartUserspecificResponse{ // empty message
+}
+
+message ColdstartRequest{
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
+}
+
+message ColdstartItem{
+    int item_id = 1;
+    string movie_title = 2;
+    int rate = 3;
+}
+
+message ColdstartResponse{
+    repeated ColdstartItem items = 1;
+}
+
+message SimilaritemsRequest{
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
+    str item_name = 4;
+}
+
+message SimilaritemsItem{
+    int item_id = 1;
+    string movie_title = 2;
+}
+
+message SimilaritemsResponse{
+    repeated SimilaritemsItem items = 1;
+}
+
+message UserspecificRequest{
+    ModelProperties model = 1;
+    bool verbose = 2;
+    int n = 3;
+}
+
+message UserspecificItem{
+    int item_id = 1;
+    string movie_title = 2;
+    int rate = 3;
+}
+
+message UserspecificResponse {
+    repeated UserspecificItem items = 1;
+}
