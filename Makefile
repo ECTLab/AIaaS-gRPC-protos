@@ -31,14 +31,7 @@ check_stubs_configs_file:
 		$(PROTOS_DIR)
 
 generate_python_protos: clean install_python_requirements
-	@mkdir $(PYTHON_PROTOS_OUTPUT_DIR)
-	@find $(PROTOS_DIR) -name "*.proto" \
-	-exec python -m grpc_tools.protoc \
-	-I$(PROTOS_DIR) \
-	--python_out=$(PYTHON_PROTOS_OUTPUT_DIR) \
-	--pyi_out=$(PYTHON_PROTOS_OUTPUT_DIR) \
-	--grpc_python_out=$(PYTHON_PROTOS_OUTPUT_DIR) {} \;
-	bash ./scripts/add_init_files.sh $(PYTHON_PROTOS_OUTPUT_DIR)
+	@./scripts/generate_python_protos.sh $(PROTOS_DIR) $(PYTHON_PROTOS_OUTPUT_DIR)
 
 generate_python_stubs: generate_python_protos
 	python \
