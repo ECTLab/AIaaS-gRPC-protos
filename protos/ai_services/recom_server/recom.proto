@@ -12,7 +12,7 @@ service RecomaaS {
     rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
     rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
     rpc Coldstart(ColdstartRequest) returns (ColdstartResponse);
-    rpc Similaritems(SimilaritemsReques) returns (SimilaritemsResponse);
+    rpc Similaritems(SimilaritemsRequest) returns (SimilaritemsResponse);
     rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
 }
 
