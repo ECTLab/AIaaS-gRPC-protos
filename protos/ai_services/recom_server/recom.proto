@@ -18,7 +18,7 @@ service RecomaaS {
 
 message ModelProperties {
     int32 user_id = 1;
-    int32 model_name = 2;
+    string model_name = 2;
 }
 
 message CreateModelRequest {
@@ -29,9 +29,21 @@ message CreateModelRequest {
 message CreateModelResponse { // empty message
 }
 
+message dataProperties {
+    string user_info_path = 1;
+    string user_ratings_path = 2;
+    string item_info_path = 3;
+    repeated string user_info_columns = 4;
+    repeated string user_ratings_columns = 5;
+    repeated string item_info_columns = 6;
+    optional string user_info_sep = 7;
+    optional string user_ratings_sep = 8; 
+    optional string item_sep = 9;
+}
+
 message StartColdstartRequest {
     ModelProperties model = 1;
-    string data_dir = 2;
+    dataProperties data = 2;
     bool verbose = 3;
 }
 
@@ -40,13 +52,14 @@ message StartColdstartResponse{  // empty message
 
 message StartSimilaritemsRequest {
     ModelProperties model = 1;
-    string data_dir = 2;
-    string algo = 3;
+    dataProperties data = 2;
+    optional string algo = 3;
     bool verbose = 4;
-    int32 k = 5;
-    int32 min_k = 6;
-    google.protobuf.Struct sim_options = 7;
-    google.protobuf.Struct bsl_options = 8;
+    optional int32 k = 5;
+    optional int32 min_k = 6;
+    optional google.protobuf.Struct sim_options = 7;
+    optional google.protobuf.Struct bsl_options = 8;
+    optional int32 n = 9;
 }
 
 message StartSimilaritemsResponse{ // empty message
@@ -54,11 +67,11 @@ message StartSimilaritemsResponse{ // empty message
 
 message StartUserspecificRequest {
     ModelProperties model = 1;
-    string data_dir = 2;
+    dataProperties data = 2;
     bool verbose = 3;
-    int32 k = 4;
-    int32 k_start = 5;
-    int32 k_end = 6;
+    optional int32 k = 4;
+    optional int32 k_start = 5;
+    optional int32 k_end = 6;
 }
 
 message StartUserspecificResponse{ // empty message
@@ -67,13 +80,13 @@ message StartUserspecificResponse{ // empty message
 message ColdstartRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int32 n = 3;
+    optional int32 n = 3;
 }
 
 message ColdstartItem{
     int32 item_id = 1;
     string movie_title = 2;
-    int32 rate = 3;
+    optional int32 rate = 3;
 }
 
 message ColdstartResponse{
@@ -83,7 +96,7 @@ message ColdstartResponse{
 message SimilaritemsRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int32 n = 3;
+    optional int32 n = 3;
     string item_name = 4;
 }
 
@@ -99,7 +112,7 @@ message SimilaritemsResponse{
 message UserspecificRequest{
     ModelProperties model = 1;
     bool verbose = 2;
-    int32 n = 3;
+    optional int32 n = 3;
 }
 
 message UserspecificItem{
