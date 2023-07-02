@@ -107,7 +107,6 @@ def generate_stubs_file_code(
 
 
 if __name__ == '__main__':
-    print(f'args: {sys.argv}')
     # read arguments
     stubs_configs_file_path = sys.argv[1]
     stubs_output_folder = sys.argv[2]
