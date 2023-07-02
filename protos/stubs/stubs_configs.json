@@ -1,7 +1,7 @@
 {
     "_comment": {
         "notice": "Allowed ports for services are 50051-50999. update next_port if you want to add more services",
-        "next_port": 50053
+        "next_port": 50054
     },
 
     "services": [
@@ -16,6 +16,12 @@
             "proto_file_path": "protos/ai_services/recom_server/recom.proto",
             "host": "0.0.0.0",
             "port": 50052
+        },
+        {
+            "name": "Wallet",
+            "proto_file_path": "protos/platform_management/wallet_server.proto",
+            "host": "0.0.0.0",
+            "port": 50053
         }
     ]
 }

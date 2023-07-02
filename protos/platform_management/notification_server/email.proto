@@ -3,6 +3,11 @@ syntax = "proto3";
 package notification_server;
 
 
+service NotificationEmail {
+    rpc SendEmail (SendEmailRequest) returns (SendEmailResponse);
+}
+
+
 message SendEmailRequest {
     string email = 1;
     string subject = 2;
@@ -10,9 +15,4 @@ message SendEmailRequest {
 }
 
 message SendEmailResponse { // empty message
-}
-
-
-service NotificationEmail {
-    rpc SendEmail (SendEmailRequest) returns (SendEmailResponse);
 }
