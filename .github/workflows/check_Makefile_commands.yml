@@ -1,0 +1,29 @@
+name: Run Makefile Commands
+
+on:
+  push:
+    paths:
+      - '**/Makefile'
+  pull_request:
+    paths:
+      - '**/Makefile'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Make
+      run: sudo apt-get update && sudo apt-get install -y make
+
+    - name: Run Makefile Commands
+      run: |
+        make clean
+        make install_python_requirements
+        make check_stubs_configs_file
+        make generate_python_protos
+        make generate_python_stubs
