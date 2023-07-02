@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package notification_server;
+
+
+service Wallet {
+    rpc CreateNewWallet(CreateNewWalletRequest) returns (CreateNewWalletResponse);
+}
+
+
+message CreateNewWalletRequest {
+    int32 user_id = 1;
+}
+
+message CreateNewWalletResponse { // empty message
+}
