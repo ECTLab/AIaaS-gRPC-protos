@@ -3,7 +3,7 @@
 git checkout master
 git fetch --tags
 
-TAGS=$(git tag --sort=-version:refname --list 'v[0-9]*.[0-9]*.[0-9]*')
+TAGS=$(git tag --sort=-version:refname --list '[0-9]*.[0-9]*.[0-9]*')
 echo "Tags: $TAGS"
 if [ -z "$TAGS" ]; then
     echo "No tags found"
