@@ -26,4 +26,3 @@ jobs:
         make install_python_requirements
         make check_stubs_configs_file
         make generate_python_protos
-        make generate_python_stubs
