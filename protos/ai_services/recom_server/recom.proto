@@ -8,12 +8,12 @@ package recom_server;
 
 service RecomaaS {
     rpc CreateModel(CreateModelRequest) returns (CreateModelResponse); 
-    rpc StartColdstart(StartColdstartRequest) returns (StartColdstartResponse);
-    rpc StartSimilaritems(StartSimilaritemsRequest) returns (StartSimilaritemsResponse);
-    rpc StartUserspecific(StartUserspecificRequest) returns (StartUserspecificResponse);
-    rpc Coldstart(ColdstartRequest) returns (ColdstartResponse);
-    rpc Similaritems(SimilaritemsRequest) returns (SimilaritemsResponse);
-    rpc Userspecific(UserspecificRequest) returns (UserspecificResponse);
+    rpc StartColdStart(StartColdStartRequest) returns (StartColdStartResponse);
+    rpc StartSimilarItems(StartSimilarItemsRequest) returns (StartSimilarItemsResponse);
+    rpc StartUserSpecific(StartUserSpecificRequest) returns (StartUserSpecificResponse);
+    rpc ColdStart(ColdStartRequest) returns (ColdStartResponse);
+    rpc SimilarItems(SimilarItemsRequest) returns (SimilarItemsResponse);
+    rpc UserSpecific(UserSpecificRequest) returns (UserSpecificResponse);
 }
 
 message ModelProperties {
@@ -41,16 +41,16 @@ message dataProperties {
     optional string item_sep = 9;
 }
 
-message StartColdstartRequest {
+message StartColdStartRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
     bool verbose = 3;
 }
 
-message StartColdstartResponse{  // empty message
+message StartColdStartResponse{  // empty message
 }
 
-message StartSimilaritemsRequest {
+message StartSimilarItemsRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
     bool verbose = 3;
@@ -62,10 +62,10 @@ message StartSimilaritemsRequest {
     optional int32 n = 9;
 }
 
-message StartSimilaritemsResponse{ // empty message
+message StartSimilarItemsResponse{ // empty message
 }
 
-message StartUserspecificRequest {
+message StartUserSpecificRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
     bool verbose = 3;
@@ -74,54 +74,54 @@ message StartUserspecificRequest {
     int32 k_end = 6; // should be optional
 }
 
-message StartUserspecificResponse{ // empty message
+message StartUserSpecificResponse{ // empty message
 }
 
-message ColdstartRequest{
+message ColdStartRequest{
     ModelProperties model = 1;
     bool verbose = 2;
     int32 n = 3; // should be optional
 }
 
-message ColdstartItem{
+message ColdStartItem{
     int32 item_id = 1;
     string movie_title = 2;
     optional int32 rate = 3;
 }
 
-message ColdstartResponse{
-    repeated ColdstartItem items = 1;
+message ColdStartResponse{
+    repeated ColdStartItem items = 1;
 }
 
-message SimilaritemsRequest{
+message SimilarItemsRequest{
     ModelProperties model = 1;
     bool verbose = 2;
     int32 n = 3; // should be optional
     string item_name = 4;
 }
 
-message SimilaritemsItem{
+message SimilarItemsItem{
     int32 item_id = 1;
     string movie_title = 2;
 }
 
-message SimilaritemsResponse{
-    repeated SimilaritemsItem items = 1;
+message SimilarItemsResponse{
+    repeated SimilarItemsItem items = 1;
 }
 
-message UserspecificRequest{
+message UserSpecificRequest{
     ModelProperties model = 1;
     bool verbose = 2;
     int32 dataset_userid = 3;
     int32 n = 4; // should be optional
 }
 
-message UserspecificItem{
+message UserSpecificItem{
     int32 item_id = 1;
     string movie_title = 2;
     int32 rate = 3;
 }
 
-message UserspecificResponse {
-    repeated UserspecificItem items = 1;
+message UserSpecificResponse {
+    repeated UserSpecificItem items = 1;
 }
