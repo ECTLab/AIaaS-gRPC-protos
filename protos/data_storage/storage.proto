@@ -9,22 +9,26 @@ service DataStorage {
     // username is obtained from input and the result will be 
     // successful if the username isn't already taken.
     // username shouldn't contain whitespace or *, ?, $, ', ", etc characters.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
 
     // A simple RPC used for removing old users. 
     // successful if the username is already registered.
     // In case of failure a proper message will be returned.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc DeregisterUser(DeregisterUserRequest) returns (DeregisterUserResponse);
 
     // A simple RPC used for setting the volume limit
     // for a specified username. 
     // Request will be failed if the username doesn't exist or 
     // the requested volume is less than the used volume of the user.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc SetVolume (SetVolumeRequest) returns (SetVolumeResponse);
 
     // A simple RPC used for getting the amount of used, total and remaing
     // volume for the specified username. 
     // request will fail if the username isn't registered.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc GetVolumeReport (GetVolumeRequest) returns (GetVolumeResponse);
 
     // A simple RPC used for creating a new folder in the specified path
@@ -35,6 +39,7 @@ service DataStorage {
     //       - the destination folder contains a folder with the same name. 
     //       - the folder name is recycleBin and the path is /username
     // if successful a boolean and the new path for folder is returened.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc CreateFolder (CreateFolderRequest) returns (CreateFolderResponse);
 
     // A simple RPC used for deleting a content in the specified path 
@@ -46,7 +51,8 @@ service DataStorage {
     //       - the user doesn't have access to this path
     //       - the user tries to remove recycleBin or base folder
     // if succesful, a true boolean is returened. 
-    // NOTE that the removed file or folder will be stored in recycleBin
+    // NOTE that the removed file or folder will be stored in recycleBin.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc Remove (RemoveRequest) returns (RemoveResponse);
 
     // A simple RPC used for deleting a content in the specified path 
@@ -61,18 +67,21 @@ service DataStorage {
     // ForceRemove can remove the folder with other contents in it and 
     // the removed folder will be in recycleBin with its contents as 
     // structured as before.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc ForceRemove (ForceRemoveRequest) returns (ForceRemoveResponse);
 
     // A simple RPC used for emptying the recycleBin folder 
     // for the specified username. 
     // fails if username isn't registered. 
     // if successful, a true boolean will be returned.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc EmptyRecycleBin (EmptyRecycleBinRequest) returns (EmptyRecycleBinResponse);
 
     // A simple RPC used for browsing the data of the specified username. 
     // obtains the base path and username from the input and 
     // returns the list of files and folders created in the base path.
     // fails if the username or the base path are not correct.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc BrowseData (BrowseDataRequest) returns (BrowseDataResponse);
     
     // A simple RPC used for check if a specified folder or file is uploaded
@@ -82,11 +91,13 @@ service DataStorage {
     // if successful the path of the file or folder is returned 
     // and if the content doesn't exist in the user's filesystem, 
     // an empty path will be returned.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc Search (SearchRequest) returns (SearchResponse);
 
     // A simple RPC used for getting the report of the general disk usage of the system.. 
     // no input is required. 
     // result contains the status of the system.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc GetSystemicReport (GetSystemicReportRequest) returns (GetSystemicReportResponse);
 
     // A simple rpc used for copying a path from a source to a destination.
@@ -113,6 +124,21 @@ service DataStorage {
     // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc Cut (CutRequest) returns (CutResponse);
 
+    // A simple rpc used for the size of the specified paths in bytes. 
+    // fails if:
+    //      - the username isn't registered. 
+    //      - the spcified path doesn't exists. 
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
+    rpc GetPathSize(GetPathSizeRequest) returns (GetPathSizeResponse);
+
+    // A simple rpc used for getting the userTree. 
+    // user tree is a string which resembles the structure of the filesystem 
+    // for the specified user. 
+    // fails if: 
+    //      - the username isn't registered.
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
+    rpc GetUserTree(GetUserTreeRequest) returns (GetUserTreeResponse);
+
     // A server-to-client RPC, used for downloading the specified file. 
     // The following content should be provided for data download. 
     //      - username
@@ -121,11 +147,13 @@ service DataStorage {
     //      - extension 
     // A byte stream which contains the file will be returned if all the above 
     // information is correctly specified. 
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc DownloadFile (DownloadFileRequest) returns (stream DownloadFileResponse); 
 
     // A client-to-server RPC, used for uploading the input data into the system. 
     // obtains file metadata and chunk_bytes from input stream and returns 
     // the path in which the data is stored (virtual path of the user).
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
     rpc UploadFile (stream UploadFileRequest) returns (UploadFileResponse); 
 }
 
@@ -215,12 +243,12 @@ message BrowseDataResponse {
     repeated string contents = 1;
 }
 
-message SearchRequest{
+message SearchRequest {
     string username = 1;
     string content = 2;
 }
 
-message SearchResponse{
+message SearchResponse {
     string path = 1;
     string content_type = 2;
 }
@@ -237,6 +265,7 @@ message MetaData {
     string path = 2;
     string filename = 3;
     string extension = 4;
+    int64 file_size = 5;
   }
 
 message CopyRequest {
@@ -257,6 +286,23 @@ message CutRequest {
 
 message CutResponse {
     int64 new_used_volume = 1;
+}
+
+message GetPathSizeRequest {
+    string username = 1; 
+    string path = 2;
+}
+
+message GetPathSizeResponse {
+    int64 size_in_bytes = 1;
+}
+
+message GetUserTreeRequest {
+    string username = 1;
+}
+
+message GetUserTreeResponse { 
+    string user_tree = 1;
 }
 
 message DownloadFileRequest {
