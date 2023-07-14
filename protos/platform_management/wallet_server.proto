@@ -2,12 +2,15 @@ syntax = "proto3";
 
 package wallet_server;
 
+import "google/protobuf/timestamp.proto";
+
 
 service Wallet {
     rpc CreateNewWallet(CreateNewWalletRequest) returns (CreateNewWalletResponse);
     rpc OnlinePayment(OnlinePaymentRequest) returns (OnlinePaymentResponse);
     rpc VerifyOnlinePayment(VerifyOnlinePaymentRequest) returns (VerifyOnlinePaymentResponse);
     rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
+    rpc GetTransactionsHistory(GetTransactionsHistoryRequest) returns (GetTransactionsHistoryResponse);
 }
 
 
@@ -44,4 +47,33 @@ message GetWalletBalanceRequest {
 
 message GetWalletBalanceResponse {
     int64 balance = 1; // in Rials ﷼
+}
+
+
+enum TransactionKind {
+    UNKNOWN_KIND = 0;
+    DEPOSIT = 1;
+    WITHDRAW = 2;
+    AI_MODEL_COST = 3;
+}
+enum TransactionStatus {
+    UNKNOWN_STATUS = 0;
+    PENDING = 1;
+    SUCCESSFUL = 2;
+    FAILED = 3;
+}
+message Transaction {
+    int64 amount = 1; // in Rials ﷼
+    google.protobuf.Timestamp create_at = 2; // UTC
+    TransactionKind kind = 3;
+    TransactionStatus status = 4;
+    string ai_model_name = 5;
+}
+
+message GetTransactionsHistoryRequest {
+    int32 user_id = 1;
+}
+
+message GetTransactionsHistoryResponse {
+    repeated Transaction transactions = 1;
 }
