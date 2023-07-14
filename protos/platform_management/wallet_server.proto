@@ -64,7 +64,7 @@ enum TransactionStatus {
 }
 message Transaction {
     int64 amount = 1; // in Rials ﷼
-    google.protobuf.Timestamp create_at = 2; // UTC
+    google.protobuf.Timestamp created_at = 2; // UTC
     TransactionKind kind = 3;
     TransactionStatus status = 4;
     string ai_model_name = 5;
