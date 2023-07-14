@@ -7,6 +7,7 @@ service Wallet {
     rpc CreateNewWallet(CreateNewWalletRequest) returns (CreateNewWalletResponse);
     rpc OnlinePayment(OnlinePaymentRequest) returns (OnlinePaymentResponse);
     rpc VerifyOnlinePayment(VerifyOnlinePaymentRequest) returns (VerifyOnlinePaymentResponse);
+    rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
 }
 
 
@@ -20,7 +21,7 @@ message CreateNewWalletResponse { // empty message
 
 message OnlinePaymentRequest {
     int32 user_id = 1;
-    int32 amount = 2; // in Rials ﷼
+    int64 amount = 2; // in Rials ﷼
 }
 
 message OnlinePaymentResponse {
@@ -34,4 +35,13 @@ message VerifyOnlinePaymentRequest {
 
 message VerifyOnlinePaymentResponse {
     bool was_successful = 1;
+}
+
+
+message GetWalletBalanceRequest {
+    int32 user_id = 1;
+}
+
+message GetWalletBalanceResponse {
+    int64 balance = 1; // in Rials ﷼
 }
