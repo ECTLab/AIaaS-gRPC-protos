@@ -55,6 +55,7 @@ enum TransactionKind {
     DEPOSIT = 1;
     WITHDRAW = 2;
     AI_MODEL_COST = 3;
+    STORAGE_COST = 4;
 }
 enum TransactionStatus {
     UNKNOWN_STATUS = 0;
