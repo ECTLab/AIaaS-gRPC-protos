@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package management_server;
+
+
+service Management {
+    rpc GetOnlinePaymentCallbackUrl(GetOnlinePaymentCallbackUrlRequest) returns (GetOnlinePaymentCallbackUrlResponse);
+}
+
+
+message GetOnlinePaymentCallbackUrlRequest { // empty message
+}
+
+message GetOnlinePaymentCallbackUrlResponse {
+    string callback_url = 1;
+}
