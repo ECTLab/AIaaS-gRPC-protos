@@ -7,6 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 service Wallet {
     rpc CreateNewWallet(CreateNewWalletRequest) returns (CreateNewWalletResponse);
+    rpc HasUserWallet(HasUserWalletRequest) returns (HasUserWalletResponse);
     rpc OnlinePayment(OnlinePaymentRequest) returns (OnlinePaymentResponse);
     rpc VerifyOnlinePayment(VerifyOnlinePaymentRequest) returns (VerifyOnlinePaymentResponse);
     rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
@@ -19,6 +20,15 @@ message CreateNewWalletRequest {
 }
 
 message CreateNewWalletResponse { // empty message
+}
+
+
+message HasUserWalletRequest {
+    int32 user_id = 1;
+}
+
+message HasUserWalletResponse {
+    bool has_wallet = 1;
 }
 
 
