@@ -71,14 +71,10 @@ def generate_stubs_file_code(
     # import libraries code generation
     default_imports = [
         'grpc',
-        'from requests import get as http_get_request',
     ]
     imports_code = ''
     for default_import in default_imports:
-        if default_import.startswith('from'):
-            imports_code += f'{default_import}\n'
-        else:
-            imports_code += f'import {default_import}\n'
+        imports_code += f'import {default_import}\n'
     imports_code += '\n'
 
     for service in services:
