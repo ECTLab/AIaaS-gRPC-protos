@@ -5,12 +5,5 @@
 
 
 def get_stub(config: dict):
-    host = ''
-    try:
-        http_get_request(config['host']+':'+str(config['port']))
-        host = config['host']
-    except:
-        host = '0.0.0.0'
-
-    channel = grpc.insecure_channel(host + ':' + str(config['port']))
+    channel = grpc.insecure_channel(config['host'] + ':' + str(config['port']))
     return config['stub_class'](channel)
