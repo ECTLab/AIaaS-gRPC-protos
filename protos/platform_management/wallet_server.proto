@@ -12,6 +12,7 @@ service Wallet {
     rpc VerifyOnlinePayment(VerifyOnlinePaymentRequest) returns (VerifyOnlinePaymentResponse);
     rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
     rpc GetTransactionsHistory(GetTransactionsHistoryRequest) returns (GetTransactionsHistoryResponse);
+    rpc GetAIModleCostPerReq(GetAIModleCostPerReqRequest) returns (GetAIModleCostPerReqResponse);
 }
 
 
@@ -87,4 +88,13 @@ message GetTransactionsHistoryRequest {
 
 message GetTransactionsHistoryResponse {
     repeated Transaction transactions = 1;
+}
+
+
+message GetAIModleCostPerReqRequest {
+    string ai_model_name = 1;
+}
+
+message GetAIModleCostPerReqResponse {
+    int32 cost_per_req = 1; // in Rials ﷼
 }
