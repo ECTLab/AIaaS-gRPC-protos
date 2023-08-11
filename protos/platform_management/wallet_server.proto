@@ -13,7 +13,7 @@ service Wallet {
     rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
     rpc GetTransactionsHistory(GetTransactionsHistoryRequest) returns (GetTransactionsHistoryResponse);
     rpc SetAIModelCostPerReq(SetAIModelCostPerReqRequest) returns (SetAIModelCostPerReqResponse);
-    rpc GetAIModlesCostPerReq(GetAIModlesCostPerReqRequest) returns (GetAIModlesCostPerReqResponse);
+    rpc GetAIModelsCostPerReq(GetAIModelsCostPerReqRequest) returns (GetAIModelsCostPerReqResponse);
     rpc BuyAIModelReqPackage(BuyAIModelReqPackageRequest) returns (BuyAIModelReqPackageResponse);
 }
 
@@ -102,11 +102,11 @@ message SetAIModelCostPerReqResponse { // empty message
 }
 
 
-message GetAIModlesCostPerReqRequest {
+message GetAIModelsCostPerReqRequest {
     repeated string ai_model_names = 1; // ["__all__"] for all models cost
 }
 
-message GetAIModlesCostPerReqResponse {
+message GetAIModelsCostPerReqResponse {
     map<string, int32> costs = 1; // in Rials ﷼
 }
 
