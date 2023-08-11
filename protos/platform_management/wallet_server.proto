@@ -12,6 +12,9 @@ service Wallet {
     rpc VerifyOnlinePayment(VerifyOnlinePaymentRequest) returns (VerifyOnlinePaymentResponse);
     rpc GetWalletBalance(GetWalletBalanceRequest) returns (GetWalletBalanceResponse);
     rpc GetTransactionsHistory(GetTransactionsHistoryRequest) returns (GetTransactionsHistoryResponse);
+    rpc CreateNewAIModelCost(CreateNewAIModelCostRequest) returns (CreateNewAIModelCostResponse);
+    rpc GetAIModlesCostPerReq(GetAIModlesCostPerReqRequest) returns (GetAIModlesCostPerReqResponse);
+    rpc BuyAIModelReqPackage(BuyAIModelReqPackageRequest) returns (BuyAIModelReqPackageResponse);
 }
 
 
@@ -87,4 +90,32 @@ message GetTransactionsHistoryRequest {
 
 message GetTransactionsHistoryResponse {
     repeated Transaction transactions = 1;
+}
+
+
+message CreateNewAIModelCostRequest {
+    string ai_model_name = 1;
+    int32 cost_per_req = 2; // in Rials ﷼
+}
+
+message CreateNewAIModelCostResponse { // empty message
+}
+
+
+message GetAIModlesCostPerReqRequest {
+    repeated string ai_model_names = 1; // ["__all__"] for all models cost
+}
+
+message GetAIModlesCostPerReqResponse {
+    map<string, int32> costs = 1; // in Rials ﷼
+}
+
+
+message BuyAIModelReqPackageRequest {
+    int32 user_id = 1;
+    string ai_model_name = 2;
+    int64 req_count = 3;
+}
+
+message BuyAIModelReqPackageResponse { // empty message
 }
