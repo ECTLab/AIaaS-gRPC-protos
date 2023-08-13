@@ -19,7 +19,7 @@ service Wallet {
 
 
 message CreateNewWalletRequest {
-    int32 user_id = 1;
+    uint32 user_id = 1;
 }
 
 message CreateNewWalletResponse { // empty message
@@ -27,7 +27,7 @@ message CreateNewWalletResponse { // empty message
 
 
 message HasUserWalletRequest {
-    int32 user_id = 1;
+    uint32 user_id = 1;
 }
 
 message HasUserWalletResponse {
@@ -36,8 +36,8 @@ message HasUserWalletResponse {
 
 
 message OnlinePaymentRequest {
-    int32 user_id = 1;
-    int64 amount = 2; // in Rials ﷼
+    uint32 user_id = 1;
+    uint64 amount = 2; // in Rials ﷼
 }
 
 message OnlinePaymentResponse {
@@ -46,7 +46,7 @@ message OnlinePaymentResponse {
 
 
 message VerifyOnlinePaymentRequest {
-    int64 track_id = 1;
+    uint64 track_id = 1;
 }
 
 message VerifyOnlinePaymentResponse {
@@ -55,11 +55,11 @@ message VerifyOnlinePaymentResponse {
 
 
 message GetWalletBalanceRequest {
-    int32 user_id = 1;
+    uint32 user_id = 1;
 }
 
 message GetWalletBalanceResponse {
-    int64 balance = 1; // in Rials ﷼
+    uint64 balance = 1; // in Rials ﷼
 }
 
 
@@ -77,7 +77,7 @@ enum TransactionStatus {
     FAILED = 3;
 }
 message Transaction {
-    int64 amount = 1; // in Rials ﷼
+    uint64 amount = 1; // in Rials ﷼
     google.protobuf.Timestamp created_at = 2; // UTC
     TransactionKind kind = 3;
     TransactionStatus status = 4;
@@ -85,7 +85,7 @@ message Transaction {
 }
 
 message GetTransactionsHistoryRequest {
-    int32 user_id = 1;
+    uint32 user_id = 1;
 }
 
 message GetTransactionsHistoryResponse {
@@ -95,7 +95,7 @@ message GetTransactionsHistoryResponse {
 
 message SetAIModelCostPerReqRequest {
     string ai_model_name = 1;
-    int32 cost_per_req = 2; // in Rials ﷼
+    uint32 cost_per_req = 2; // in Rials ﷼
 }
 
 message SetAIModelCostPerReqResponse { // empty message
@@ -107,14 +107,14 @@ message GetAIModelsCostPerReqRequest {
 }
 
 message GetAIModelsCostPerReqResponse {
-    map<string, int32> costs = 1; // in Rials ﷼
+    map<string, uint32> costs = 1; // in Rials ﷼
 }
 
 
 message BuyAIModelReqPackageRequest {
-    int32 user_id = 1;
+    uint32 user_id = 1;
     string ai_model_name = 2;
-    int64 req_count = 3;
+    uint64 req_count = 3;
 }
 
 message BuyAIModelReqPackageResponse { // empty message
