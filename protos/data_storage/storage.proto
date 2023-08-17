@@ -1,0 +1,275 @@
+syntax = "proto3";
+
+package data_storage;
+
+
+message RegisterUserRequest {
+    string username = 1;
+    int64 initial_volume = 2; // bytes 
+}
+
+message RegisterUserResponse {}
+
+message DeregisterUserRequest{
+    string username = 1;
+}
+
+message DeregisterUserResponse {}
+
+message SetVolumeRequest {
+    string username = 1; 
+    int64 new_volume = 2; // bytes
+}
+
+message SetVolumeResponse {}
+
+message SetSystemVolumeRequest {
+    int64 total_volume = 1; // bytes
+    float over_subscription_rate = 2;
+}
+
+message SetSystemVolumeResponse {}
+
+message VolumeReport {
+    int64 total_allocated_volume = 1; // bytes
+    int64 total_used_volume = 2; // bytes
+    int64 remaining_volume = 3; // bytes
+}
+
+message GetVolumeRequest {
+    string username = 1;
+}
+
+message GetVolumeResponse {
+    VolumeReport volume_report = 2;
+}
+
+message CreateFolderRequest {
+    string username = 1;
+    string folder_name = 2;
+    string path = 3; 
+}
+
+message CreateFolderResponse {
+    string path = 2;
+}
+
+message RemoveRequest {
+    string username = 1; 
+    string path = 2;
+}
+
+message RemoveResponse {}
+
+message ForceRemoveRequest {
+    string username = 1; 
+    string path = 2;
+}
+
+message ForceRemoveResponse {}
+
+message EmptyRecycleBinRequest {
+    string username = 1;
+}
+
+message EmptyRecycleBinResponse {}
+
+message BrowseDataRequest {
+    string username = 1;
+    string path = 2;
+}
+
+message BrowseDataResponse {
+    repeated string contents = 2;
+}
+
+message SearchRequest{
+    string username = 1;
+    string content = 2;
+}
+
+message SearchResponse{
+    string path = 1;
+    string content_type = 2;
+}
+
+message GetSystemicReportRequest {}
+
+message GetSystemicReportResponse {
+    int64 total_volume = 1; // bytes
+    float over_subscription_rate = 2;
+    int64 number_of_users = 3;
+    VolumeReport volume_report = 4;
+}
+
+message MetaData {
+    string username = 1;
+    string path = 2;
+    string filename = 3;
+    string extension = 4;
+}
+
+message CopyRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CopyResponse {}
+
+message CutRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CutResponse {}
+
+message DownloadFileRequest {
+    string username = 1;
+    string path = 2;
+}
+
+message DownloadFileResponse {
+    bytes chunk_data = 1;
+}
+
+message UploadFileRequest {
+    oneof request {
+        MetaData metadata = 2;
+        bytes chunk_data = 3;
+    }
+}
+
+message UploadFileResponse {
+    string path = 2;
+}
+
+// Interface exported by the server.
+service DataStorage {
+    // A simple RPC used for registering new users. 
+    // username is obtained from input and the result will be 
+    // successful if the username isn't already taken.
+    // username shouldn't contain whitespace or *, ?, $, ', ", etc characters.
+    rpc RegisterUser (RegisterUserRequest) returns (RegisterUserResponse);
+
+    // A simple RPC used for removing old users. 
+    // successful if the username is already registered.
+    // In case of failure a proper message will be returned.
+    rpc DeregisterUser(DeregisterUserRequest) returns (DeregisterUserResponse);
+
+    // A simple RPC used for setting the volume limit
+    // for a specified username. 
+    // Request will be failed if the username doesn't exist or 
+    // the requested volume is less than the used volume of the user.
+    rpc SetVolume (SetVolumeRequest) returns (SetVolumeResponse);
+
+    // A simple RPC used for setting the total_volume and over_subscription_rate 
+    // of the system. 
+    // The total size that is possible to allocate among users deriveds from 
+    // the multiplication of over_subscription_rate and actual size of the system.
+    // fails if the new size of the system is less than the sum of previously allocated 
+    /// volumes. 
+    rpc SetSystemVolume (SetSystemVolumeRequest) returns (SetSystemVolumeResponse);
+
+    // A simple RPC used for getting the amount of used, total and remaing
+    // volume for the specified username. 
+    // request will fail if the username isn't registered.
+    rpc GetVolumeReport (GetVolumeRequest) returns (GetVolumeResponse);
+
+    // A simple RPC used for creating a new folder in the specified path
+    // for the spcified useranme
+    // fails if: 
+    //       - username isn't registered
+    //       - the path can't be reached(missing folder between the path)
+    //       - the destination folder contains a folder with the same name. 
+    //       - the folder name is recycleBin and the path is /username
+    // if successful a boolean and the new path for folder is returened.
+    rpc CreateFolder (CreateFolderRequest) returns (CreateFolderResponse);
+
+    // A simple RPC used for deleting a content in the specified path 
+    // for the specified username.
+    // fails if: 
+    //       - username isn't registered
+    //       - the specified path doesn't exist
+    //       - the specified folder is not empty.
+    //       - the user doesn't have access to this path
+    //       - the user tries to remove recycleBin or base folder
+    // if succesful, a true boolean is returened. 
+    // NOTE that the removed file or folder will be stored in recycleBin
+    rpc Remove (RemoveRequest) returns (RemoveResponse);
+
+    // A simple RPC used for deleting a content in the specified path 
+    // for the specified username.
+    // fails if: 
+    //       - username isn't registered
+    //       - the specified path doesn't exist
+    //       - the user doesn't have access to this path
+    //       - the user tries to remove recycleBin or base folder
+    // if succesful, a true boolean is returened. 
+    // NOTE that the different between Remove and ForceRemove is that 
+    // ForceRemove can remove the folder with other contents in it and 
+    // the removed folder will be in recycleBin with its contents as 
+    // structured as before.
+    rpc ForceRemove (ForceRemoveRequest) returns (ForceRemoveResponse);
+
+    // A simple RPC used for emptying the recycleBin folder 
+    // for the specified username. 
+    // fails if username isn't registered. 
+    // if successful, a true boolean will be returned.
+    rpc EmptyRecycleBin (EmptyRecycleBinRequest) returns (EmptyRecycleBinResponse);
+
+    // A simple RPC used for browsing the data of the specified username. 
+    // obtains the base path and username from the input and 
+    // returns the list of files and folders created in the base path.
+    // fails if the username or the base path are not correct.
+    rpc BrowseData (BrowseDataRequest) returns (BrowseDataResponse);
+    
+    // A simple RPC used for check if a specified folder or file is uploaded
+    // for the specified user.
+    // fails if: 
+    //      - the user is not registered. 
+    // if successful the path of the file or folder is returned 
+    // and if the content doesn't exist in the user's filesystem, 
+    // an empty path will be returned.
+    rpc Search (SearchRequest) returns (SearchResponse);
+
+    // A simple RPC used for getting the report of the general disk usage of the system.. 
+    // no input is required. 
+    // result contains the status of the system.
+    rpc GetSystemicReport (GetSystemicReportRequest) returns (GetSystemicReportResponse);
+
+    // A simple rpc used for copying a path from a source to a destination.
+    // fails if:
+    //      - the username isn't registered prior to the action.
+    //      - the source or destination path doesn't exist in the user's filesystem.
+    //      - the username doesn't have access to the source or destination path. 
+    //      - there isn't enough space for the copying action to be completed. 
+    //      - the destination path basename is a file. 
+    //      - source and destination paths point at the same place. 
+    //      - a content with same name exists in the destination path. 
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
+    rpc Copy (CopyRequest) returns (CopyResponse);
+
+    // A simple rpc used for cutting a path from a source and pasting it to a destination.
+    // fails if:
+    //      - the username isn't registered prior to the action.
+    //      - the source or destination path doesn't exist in the user's filesystem.
+    //      - the username doesn't have access to the source or destination path. 
+    //      - there isn't enough space for the copying action to be completed. 
+    //      - the destination path basename is a file. 
+    //      - source and destination paths point at the same place. 
+    //      - a content with same name exists in the destination path. 
+    // In case of the failure the rpc call is aborted and a proper message is shown to user.
+    rpc Cut (CutRequest) returns (CutResponse);
+
+    // A server-to-client RPC, used for downloading the specified file. 
+    // A byte stream which contains the file will be returned if all the above 
+    // information is correctly specified. 
+    rpc DownloadFile (DownloadFileRequest) returns (stream DownloadFileResponse); 
+
+    // A client-to-server RPC, used for uploading the input data into the system. 
+    // obtains file metadata and chunk_bytes from input stream and returns 
+    // the path in which the data is stored (virtual path of the user).
+    rpc UploadFile (stream UploadFileRequest) returns (UploadFileResponse); 
+}
