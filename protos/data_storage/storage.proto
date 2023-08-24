@@ -3,145 +3,6 @@ syntax = "proto3";
 package data_storage;
 
 
-message RegisterUserRequest {
-    string username = 1;
-    int64 initial_volume = 2; // bytes 
-}
-
-message RegisterUserResponse {}
-
-message DeregisterUserRequest{
-    string username = 1;
-}
-
-message DeregisterUserResponse {}
-
-message SetVolumeRequest {
-    string username = 1; 
-    int64 new_volume = 2; // bytes
-}
-
-message SetVolumeResponse {}
-
-message SetSystemVolumeRequest {
-    int64 total_volume = 1; // bytes
-    float over_subscription_rate = 2;
-}
-
-message SetSystemVolumeResponse {}
-
-message VolumeReport {
-    int64 total_allocated_volume = 1; // bytes
-    int64 total_used_volume = 2; // bytes
-    int64 remaining_volume = 3; // bytes
-}
-
-message GetVolumeRequest {
-    string username = 1;
-}
-
-message GetVolumeResponse {
-    VolumeReport volume_report = 1;
-}
-
-message CreateFolderRequest {
-    string username = 1;
-    string folder_name = 2;
-    string path = 3; 
-}
-
-message CreateFolderResponse {}
-
-message RemoveRequest {
-    string username = 1; 
-    string path = 2;
-}
-
-message RemoveResponse {}
-
-message ForceRemoveRequest {
-    string username = 1; 
-    string path = 2;
-}
-
-message ForceRemoveResponse {}
-
-message EmptyRecycleBinRequest {
-    string username = 1;
-}
-
-message EmptyRecycleBinResponse {}
-
-message BrowseDataRequest {
-    string username = 1;
-    string path = 2;
-}
-
-message BrowseDataResponse {
-    repeated string contents = 1;
-}
-
-message SearchRequest{
-    string username = 1;
-    string content = 2;
-}
-
-message SearchResponse{
-    string path = 1;
-    string content_type = 2;
-}
-
-message GetSystemicReportRequest {}
-
-message GetSystemicReportResponse {
-    int64 total_volume = 1; // bytes
-    float over_subscription_rate = 2;
-    int64 number_of_users = 3;
-    VolumeReport volume_report = 4;
-}
-
-message MetaData {
-    string username = 1;
-    string path = 2;
-    string filename = 3;
-    string extension = 4;
-}
-
-message CopyRequest {
-    string username = 1;
-    string source_path = 2;
-    string destination_path = 3;
-}
-
-message CopyResponse {}
-
-message CutRequest {
-    string username = 1;
-    string source_path = 2;
-    string destination_path = 3;
-}
-
-message CutResponse {}
-
-message DownloadFileRequest {
-    string username = 1;
-    string path = 2;
-}
-
-message DownloadFileResponse {
-    bytes chunk_data = 1;
-}
-
-message UploadFileRequest {
-    oneof request {
-        MetaData metadata = 1;
-        bytes chunk_data = 2;
-    }
-}
-
-message UploadFileResponse {}
-
-// Interface exported by the server.
 service DataStorage {
     // A simple RPC used for registering new users. 
     // username is obtained from input and the result will be 
@@ -275,4 +136,170 @@ service DataStorage {
     // the path in which the data is stored (virtual path of the user).
     // In case of failure request will be aborted with proper message
     rpc UploadFile (stream UploadFileRequest) returns (UploadFileResponse); 
+}
+
+
+message RegisterUserRequest {
+    string username = 1;
+    int64 initial_volume = 2; // bytes 
+}
+
+message RegisterUserResponse { // empty message
+}
+
+
+message DeregisterUserRequest{
+    string username = 1;
+}
+
+message DeregisterUserResponse { // empty message
+}
+
+
+message SetVolumeRequest {
+    string username = 1; 
+    int64 new_volume = 2; // bytes
+}
+
+message SetVolumeResponse { // empty message
+}
+
+
+message SetSystemVolumeRequest {
+    int64 total_volume = 1; // bytes
+    float over_subscription_rate = 2;
+}
+
+message SetSystemVolumeResponse { // empty message
+}
+
+
+message VolumeReport {
+    int64 total_allocated_volume = 1; // bytes
+    int64 total_used_volume = 2; // bytes
+    int64 remaining_volume = 3; // bytes
+}
+
+message GetVolumeRequest {
+    string username = 1;
+}
+
+message GetVolumeResponse {
+    VolumeReport volume_report = 1;
+}
+
+
+message CreateFolderRequest {
+    string username = 1;
+    string folder_name = 2;
+    string path = 3; 
+}
+
+message CreateFolderResponse { // empty message
+}
+
+
+message RemoveRequest {
+    string username = 1; 
+    string path = 2;
+}
+
+message RemoveResponse { // empty message
+}
+
+
+message ForceRemoveRequest {
+    string username = 1; 
+    string path = 2;
+}
+
+message ForceRemoveResponse { // empty message
+}
+
+
+message EmptyRecycleBinRequest {
+    string username = 1;
+}
+
+message EmptyRecycleBinResponse { // empty message
+}
+
+
+message BrowseDataRequest {
+    string username = 1;
+    string path = 2;
+}
+
+message BrowseDataResponse {
+    repeated string contents = 1;
+}
+
+
+message SearchRequest{
+    string username = 1;
+    string content = 2;
+}
+
+message SearchResponse{
+    string path = 1;
+    string content_type = 2;
+}
+
+
+message GetSystemicReportRequest { // empty message
+}
+
+message GetSystemicReportResponse {
+    int64 total_volume = 1; // bytes
+    float over_subscription_rate = 2;
+    int64 number_of_users = 3;
+    VolumeReport volume_report = 4;
+}
+
+
+message CopyRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CopyResponse { // empty message
+}
+
+
+message CutRequest {
+    string username = 1;
+    string source_path = 2;
+    string destination_path = 3;
+}
+
+message CutResponse { // empty message
+}
+
+
+message DownloadFileRequest {
+    string username = 1;
+    string path = 2;
+}
+
+message DownloadFileResponse {
+    bytes chunk_data = 1;
+}
+
+
+message MetaData {
+    string username = 1;
+    string path = 2;
+    string filename = 3;
+    string extension = 4;
+}
+
+message UploadFileRequest {
+    oneof request {
+        MetaData metadata = 1;
+        bytes chunk_data = 2;
+    }
+}
+
+message UploadFileResponse { // empty message
 }
