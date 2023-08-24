@@ -2,7 +2,7 @@
     "_comment": {
         "notice": "Allowed ports for services are 50051-50999. update next_port if you want to add more services",
         "services_host": "Services host should be the same as the service name in this docker-compose file: https://github.com/ECTLab/AIaaS-local-runner/blob/master/docker-compose.yaml",
-        "next_port": 50055
+        "next_port": 50056
     },
 
     "services": [
@@ -29,6 +29,12 @@
             "proto_file_path": "protos/platform_management/management_server.proto",
             "host": "platform_management_grpc_server",
             "port": 50054
+        },
+        {
+            "name": "DataStorage",
+            "proto_file_path": "protos/data_storage/storage.proto",
+            "host": "data_storage_grpc_server",
+            "port": 50055
         }
     ]
 }
