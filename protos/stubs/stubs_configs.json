@@ -13,9 +13,9 @@
             "port": 50051
         },
         {
-            "name": "RecomaaS",
-            "proto_file_path": "protos/ai_services/recom_server/recom.proto",
-            "host": "recomaas_grpc_server",
+            "name": "Recommendation",
+            "proto_file_path": "protos/AI_services/models/recommendation.proto",
+            "host": "recommendation_grpc_server",
             "port": 50052
         },
         {
@@ -32,7 +32,7 @@
         },
         {
             "name": "DataStorage",
-            "proto_file_path": "protos/data_storage/storage.proto",
+            "proto_file_path": "protos/data_storage.proto",
             "host": "data_storage_grpc_server",
             "port": 50055
         }

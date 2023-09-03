@@ -3,10 +3,10 @@ syntax = "proto3";
 import "google/protobuf/struct.proto";
 
 
-package recom_server;
+package recommendation;
 
 
-service RecomaaS {
+service Recommendation {
     rpc CreateModel(CreateModelRequest) returns (CreateModelResponse); 
     rpc StartColdStart(StartColdStartRequest) returns (StartColdStartResponse);
     rpc StartSimilarItems(StartSimilarItemsRequest) returns (StartSimilarItemsResponse);
