@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package notification_server;
+package notification_email;
 
 
 service NotificationEmail {

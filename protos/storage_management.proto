@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package data_storage;
+package storage_management;
 
 
-service DataStorage {
+service StorageManagement {
     // A simple RPC used for registering new users. 
     // username is obtained from input and the result will be 
     // successful if the username isn't already taken.
