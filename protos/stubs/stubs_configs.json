@@ -14,7 +14,7 @@
         },
         {
             "name": "Recommendation",
-            "proto_file_path": "protos/AI_services/models/recommendation.proto",
+            "proto_file_path": "protos/ai_services/ai_models/recommendation.proto",
             "host": "recommendation_grpc_server",
             "port": 50052
         },
