@@ -31,8 +31,8 @@
             "port": 50054
         },
         {
-            "name": "DataStorage",
-            "proto_file_path": "protos/data_storage.proto",
+            "name": "StorageManagement",
+            "proto_file_path": "protos/storage_management.proto",
             "host": "data_storage_grpc_server",
             "port": 50055
         }
