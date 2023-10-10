@@ -9,31 +9,31 @@
         {
             "name": "NotificationEmail",
             "proto_file_path": "protos/platform_management/notification_server/email.proto",
-            "host": "notification_email_grpc_server",
+            "host": "notification-email-grpc-server",
             "port": 50051
         },
         {
             "name": "Recommendation",
             "proto_file_path": "protos/ai_services/ai_models/recommendation.proto",
-            "host": "recommendation_grpc_server",
+            "host": "recommendation-grpc-server",
             "port": 50052
         },
         {
             "name": "Wallet",
             "proto_file_path": "protos/platform_management/wallet_server.proto",
-            "host": "wallet_grpc_server",
+            "host": "wallet-grpc-server",
             "port": 50053
         },
         {
             "name": "Management",
             "proto_file_path": "protos/platform_management/management_server.proto",
-            "host": "platform_management_grpc_server",
+            "host": "platform-management-grpc-server",
             "port": 50054
         },
         {
             "name": "StorageManagement",
             "proto_file_path": "protos/storage_management.proto",
-            "host": "storage_management_grpc_server",
+            "host": "storage-management-grpc-server",
             "port": 50055
         }
     ]
