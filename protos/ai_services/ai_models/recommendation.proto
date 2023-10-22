@@ -14,10 +14,12 @@ service Recommendation {
     rpc ColdStart(ColdStartRequest) returns (ColdStartResponse);
     rpc SimilarItems(SimilarItemsRequest) returns (SimilarItemsResponse);
     rpc UserSpecific(UserSpecificRequest) returns (UserSpecificResponse);
+    rpc SetCounter(SetCounterRequest) returns (SetCounterResponse);
+    rpc GetCounter(GetCounterRequest) returns (GetCounterResponse);
 }
 
 message ModelProperties {
-    int32 user_id = 1;
+    string username = 1;
     string model_name = 2;
 }
 
@@ -124,4 +126,20 @@ message UserSpecificItem{
 
 message UserSpecificResponse {
     repeated UserSpecificItem items = 1;
+}
+
+message SetCounterRequest {
+    ModelProperties model = 1;
+    int64 counter = 2;
+}
+
+message SetCounterResponse { // empty message
+}
+
+message GetCounterRequest {
+    ModelProperties model = 1;
+}
+
+message GetCounterResponse {
+    int64 counter = 1;
 }
