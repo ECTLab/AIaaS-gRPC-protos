@@ -130,7 +130,7 @@ message UserSpecificResponse {
 
 message SetCounterRequest {
     ModelProperties model = 1;
-    int32 counter = 2;
+    int64 counter = 2;
 }
 
 message SetCounterResponse { // empty message
@@ -141,5 +141,5 @@ message GetCounterRequest {
 }
 
 message GetCounterResponse {
-    int32 counter = 1;
+    int64 counter = 1;
 }
