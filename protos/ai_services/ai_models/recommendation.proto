@@ -25,7 +25,6 @@ message ModelProperties {
 
 message CreateModelRequest {
     ModelProperties model = 1;
-    bool verbose = 2;
 }
 
 message CreateModelResponse { // empty message
