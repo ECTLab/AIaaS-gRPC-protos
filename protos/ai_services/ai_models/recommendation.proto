@@ -25,6 +25,7 @@ message ModelProperties {
 
 message CreateModelRequest {
     ModelProperties model = 1;
+    string path = 2;
 }
 
 message CreateModelResponse { // empty message
