@@ -25,7 +25,6 @@ message ModelProperties {
 
 message CreateModelRequest {
     ModelProperties model = 1;
-    bool verbose = 2;
 }
 
 message CreateModelResponse { // empty message
@@ -46,7 +45,6 @@ message dataProperties {
 message StartColdStartRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
-    bool verbose = 3;
 }
 
 message StartColdStartResponse{  // empty message
@@ -55,7 +53,6 @@ message StartColdStartResponse{  // empty message
 message StartSimilarItemsRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
-    bool verbose = 3;
     optional string algo = 4;
     optional int32 k = 5;
     optional int32 min_k = 6;
@@ -70,7 +67,6 @@ message StartSimilarItemsResponse{ // empty message
 message StartUserSpecificRequest {
     ModelProperties model = 1;
     dataProperties data = 2;
-    bool verbose = 3;
     int32 k = 4; // should be optional
     int32 k_start = 5; // should be optional
     int32 k_end = 6; // should be optional
@@ -81,7 +77,6 @@ message StartUserSpecificResponse{ // empty message
 
 message ColdStartRequest{
     ModelProperties model = 1;
-    bool verbose = 2;
     int32 n = 3; // should be optional
 }
 
@@ -97,7 +92,6 @@ message ColdStartResponse{
 
 message SimilarItemsRequest{
     ModelProperties model = 1;
-    bool verbose = 2;
     int32 n = 3; // should be optional
     string item_name = 4;
 }
@@ -113,7 +107,6 @@ message SimilarItemsResponse{
 
 message UserSpecificRequest{
     ModelProperties model = 1;
-    bool verbose = 2;
     int32 dataset_userid = 3;
     int32 n = 4; // should be optional
 }
