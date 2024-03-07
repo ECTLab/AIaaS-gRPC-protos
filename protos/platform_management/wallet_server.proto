@@ -15,6 +15,7 @@ service Wallet {
     rpc SetAIModelCostPerReq(SetAIModelCostPerReqRequest) returns (SetAIModelCostPerReqResponse);
     rpc GetAIModelsCostPerReq(GetAIModelsCostPerReqRequest) returns (GetAIModelsCostPerReqResponse);
     rpc BuyAIModelReqPackage(BuyAIModelReqPackageRequest) returns (BuyAIModelReqPackageResponse);
+    rpc GetAIModelRequestCount(GetAIModelRequestCountRequest) returns (GetAIModelRequestCountResponse);
 }
 
 
@@ -119,4 +120,14 @@ message BuyAIModelReqPackageRequest {
 }
 
 message BuyAIModelReqPackageResponse { // empty message
+}
+
+
+message GetAIModelRequestCountRequest {
+    string username = 1;
+    string ai_model_name = 2;
+}
+
+message GetAIModelRequestCountResponse {
+    uint64 req_count = 1;
 }
