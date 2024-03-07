@@ -113,8 +113,9 @@ message GetAIModelsCostPerReqResponse {
 
 message BuyAIModelReqPackageRequest {
     uint32 user_id = 1;
-    string ai_model_name = 2;
-    uint64 req_count = 3;
+    string username = 2;
+    string ai_model_name = 3;
+    uint64 req_count = 4;
 }
 
 message BuyAIModelReqPackageResponse { // empty message
