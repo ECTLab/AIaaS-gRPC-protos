@@ -4,6 +4,10 @@
 {{ Services class code }}
 
 
+from os import environ
+USE_LOCALHOST = environ.get('AIAAS_GRPC_USE_LOCALHOST', 'False').lower() == 'true'
+
 def get_stub(config: dict):
-    channel = grpc.insecure_channel(config['host'] + ':' + str(config['port']))
+    host = '127.0.0.1' if USE_LOCALHOST else config['host']
+    channel = grpc.insecure_channel(host + ':' + str(config['port']))
     return config['stub_class'](channel)
