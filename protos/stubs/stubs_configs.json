@@ -33,7 +33,7 @@
         {
             "name": "StorageManagement",
             "proto_file_path": "protos/storage_management.proto",
-            "host": "storage-management-grpc-server",
+            "host": "0.0.0.0",
             "port": 50055
         }
     ]
