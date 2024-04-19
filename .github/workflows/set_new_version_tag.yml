@@ -10,6 +10,7 @@ on:
       - '**/*python*'
       - '**/python/**'
       - 'stubs/**'
+      - 'requirements.txt'
 
 jobs:
   set-version-tag:
