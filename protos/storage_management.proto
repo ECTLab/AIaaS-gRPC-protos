@@ -135,7 +135,12 @@ service StorageManagement {
     // obtains file metadata and chunk_bytes from input stream and returns 
     // the path in which the data is stored (virtual path of the user).
     // In case of failure request will be aborted with proper message
-    rpc UploadFile (stream UploadFileRequest) returns (UploadFileResponse); 
+    rpc UploadFile (stream UploadFileRequest) returns (UploadFileResponse);
+
+    // A simple RPC used for getting the amount of used, total and remaining
+    // volume for a list of username. 
+    // In case of failure request will be aborted with proper message
+    rpc GetUsersVolumeReport(GetUsersVolumeReportRequest) returns (GetUsersVolumeReportResponse);
 }
 
 
@@ -188,6 +193,13 @@ message GetVolumeResponse {
     VolumeReport volume_report = 1;
 }
 
+message GetUsersVolumeReportRequest {
+    repeated string usernames = 1;
+}
+
+message GetUsersVolumeReportResponse {
+    map<string, VolumeReport> volumes_report = 1; // in Rials ﷼
+}
 
 message CreateFolderRequest {
     string username = 1;

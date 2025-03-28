@@ -16,6 +16,7 @@ service Wallet {
     rpc GetAIModelsCostPerReq(GetAIModelsCostPerReqRequest) returns (GetAIModelsCostPerReqResponse);
     rpc BuyAIModelReqPackage(BuyAIModelReqPackageRequest) returns (BuyAIModelReqPackageResponse);
     rpc GetAIModelRequestCount(GetAIModelRequestCountRequest) returns (GetAIModelRequestCountResponse);
+    rpc GetUsersWalletBalance(GetUsersWalletBalanceRequest) returns (GetUsersWalletBalanceResponse);
 }
 
 
@@ -63,6 +64,14 @@ message GetWalletBalanceResponse {
     uint64 balance = 1; // in Rials ﷼
 }
 
+
+message GetUsersWalletBalanceRequest {
+    repeated string user_ids = 1;
+}
+
+message GetUsersWalletBalanceResponse {
+    map<string, uint64> balances = 1; // in Rials ﷼
+}
 
 enum TransactionKind {
     UNKNOWN_KIND = 0;
