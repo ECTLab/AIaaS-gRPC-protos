@@ -164,6 +164,7 @@ message DeregisterUserResponse { // empty message
 message SetVolumeRequest {
     string username = 1; 
     int64 new_volume = 2; // bytes
+    string expiration_date = 3; // YYYY-MM-DD
 }
 
 message SetVolumeResponse { // empty message
