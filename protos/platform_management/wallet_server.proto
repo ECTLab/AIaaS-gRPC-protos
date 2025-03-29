@@ -17,6 +17,11 @@ service Wallet {
     rpc BuyAIModelReqPackage(BuyAIModelReqPackageRequest) returns (BuyAIModelReqPackageResponse);
     rpc GetAIModelRequestCount(GetAIModelRequestCountRequest) returns (GetAIModelRequestCountResponse);
     rpc GetUsersWalletBalance(GetUsersWalletBalanceRequest) returns (GetUsersWalletBalanceResponse);
+    rpc CreateStoragePlan(CreateStoragePlanRequest) returns (CreateStoragePlanResponse);
+    rpc GetStoragePlan(GetStoragePlanRequest) returns (GetStoragePlanResponse);
+    rpc ListStoragePlans(ListStoragePlansRequest) returns (ListStoragePlansResponse);
+    rpc UpdateStoragePlan(UpdateStoragePlanRequest) returns (UpdateStoragePlanResponse);
+    rpc DeleteStoragePlan(DeleteStoragePlanRequest) returns (DeleteStoragePlanResponse);
 }
 
 
@@ -139,4 +144,64 @@ message GetAIModelRequestCountRequest {
 
 message GetAIModelRequestCountResponse {
     uint64 req_count = 1;
+}
+
+message StoragePlan {
+    string id = 1;
+    string name = 2;
+    uint64 storage_limit_mb = 3;  // Storage in MB
+    uint32 duration_days = 4;     // Subscription period (e.g., 30 days)
+    double price = 5;             // Price in Rials
+    string description = 6;       // Optional description
+}
+
+message CreateStoragePlanRequest {
+    string name = 1;
+    uint64 storage_limit_mb = 2;
+    uint32 duration_days = 3;
+    double price = 4;
+    string description = 5;
+}
+
+message CreateStoragePlanResponse {
+    StoragePlan plan = 1;
+}
+
+message GetStoragePlanRequest {
+    string id = 1;
+}
+
+message GetStoragePlanResponse {
+    StoragePlan plan = 1;
+}
+
+message ListStoragePlansRequest {
+    int32 page_size = 1;
+    int32 page_number = 2;
+}
+
+message ListStoragePlansResponse {
+    repeated StoragePlan plans = 1;
+    int32 total_plans = 2;
+}
+
+message UpdateStoragePlanRequest {
+    string id = 1;
+    optional string name = 2;
+    optional uint64 storage_limit_mb = 3;
+    optional uint32 duration_days = 4;
+    optional double price = 5;
+    optional string description = 6;
+}
+
+message UpdateStoragePlanResponse {
+    StoragePlan plan = 1;
+}
+
+message DeleteStoragePlanRequest {
+    string id = 1;
+}
+
+message DeleteStoragePlanResponse {
+    bool success = 1;
 }
