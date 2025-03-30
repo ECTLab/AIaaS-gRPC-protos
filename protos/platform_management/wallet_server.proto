@@ -22,6 +22,9 @@ service Wallet {
     rpc ListStoragePlans(ListStoragePlansRequest) returns (ListStoragePlansResponse);
     rpc UpdateStoragePlan(UpdateStoragePlanRequest) returns (UpdateStoragePlanResponse);
     rpc DeleteStoragePlan(DeleteStoragePlanRequest) returns (DeleteStoragePlanResponse);
+    rpc SubscribeStoragePlan(SubscribeStoragePlanRequest) returns (SubscribeStoragePlanResponse);
+    rpc UpgradeStoragePlan(UpgradeStoragePlanRequest) returns (UpgradeStoragePlanResponse);
+    rpc RenewStoragePlan(RenewStoragePlanRequest) returns (RenewStoragePlanResponse);
 }
 
 
@@ -204,4 +207,40 @@ message DeleteStoragePlanRequest {
 
 message DeleteStoragePlanResponse {
     bool success = 1;
+}
+
+message UserStoragePlan {
+    string id = 1;
+    uint32 user_id = 2;
+    double price = 3;
+    string expiration_date = 4;
+}
+
+message SubscribeStoragePlanRequest {
+    uint32 user_id = 1;
+    string username = 2;
+    string storage_plan_id = 3;
+}
+
+message SubscribeStoragePlanResponse {
+    UserStoragePlan user_storage_plan = 1;
+}
+
+message UpgradeStoragePlanRequest {
+    int32 user_id = 1;
+    string username = 2;
+    string storage_plan_id = 3;
+}
+
+message UpgradeStoragePlanResponse {
+    UserStoragePlan user_storage_plan = 1;
+}
+
+message RenewStoragePlanRequest {
+    int32 user_id = 1;
+    string username = 2;
+}
+
+message RenewStoragePlanResponse {
+    UserStoragePlan user_storage_plan = 1;
 }
