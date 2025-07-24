@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package ticketing;
+
+service Ticketing {
+  // User creates a new ticket
+  rpc CreateTicket (CreateTicketRequest) returns (CreateTicketResponse);
+
+  // User views the status of their tickets with pagination
+  rpc GetUserTickets (GetUserTicketsRequest) returns (GetUserTicketsResponse);
+
+  // User closes a ticket
+  rpc CloseTicket (CloseTicketRequest) returns (CloseTicketResponse);
+
+  // Admin views and searches tickets with pagination
+  rpc GetTickets (GetTicketsRequest) returns (GetTicketsResponse);
+
+  // Admin responds to and closes a ticket
+  rpc RespondToTicket (RespondToTicketRequest) returns (RespondToTicketResponse);
+}
+
+message Ticket {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string description = 4;
+  string category = 5;
+  TicketStatus status = 6;
+  optional string admin_response = 7;
+  optional string admin_id = 8;
+  string created_at = 9;
+}
+
+enum TicketStatus {
+  OPEN = 0;
+  CLOSED = 1;
+}
+
+message CreateTicketRequest {
+  string user_id = 1;
+  string title = 2;
+  string description = 3;
+  string category = 4;
+}
+
+message CreateTicketResponse {
+  string ticket_id = 1;
+}
+
+message GetUserTicketsRequest {
+  string user_id = 1;
+  optional int32 page_number = 2; // The page number for pagination
+  optional int32 page_size = 3; // Number of tickets per page
+}
+
+message GetUserTicketsResponse {
+  repeated Ticket tickets = 1;
+  int32 total_count = 2; // Total number of tickets for pagination
+}
+
+message CloseTicketRequest {
+  string user_id = 1;
+  string ticket_id = 2;
+}
+
+message CloseTicketResponse {
+  bool success = 1;
+}
+
+message GetTicketsRequest {
+  optional string title = 1;
+  optional string category = 2;
+  optional TicketStatus status = 3;
+  optional string user_id = 4;
+  optional int32 page_number = 5; // The page number for pagination
+  optional int32 page_size = 6; // Number of tickets per page
+}
+
+message GetTicketsResponse {
+  repeated Ticket tickets = 1;
+  int32 total_count = 2; // Total number of tickets for pagination
+}
+
+message RespondToTicketRequest {
+  string admin_id = 1;
+  string ticket_id = 2;
+  string response_message = 3;
+}
+
+message RespondToTicketResponse {
+  bool success = 1;
+}

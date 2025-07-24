@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package discount;
+
+service Discount {
+  // Admin APIs
+  rpc CreateVoucher(CreateVoucherRequest) returns (CreateVoucherResponse); // Creates a new discount voucher
+  rpc DeleteVoucher(DeleteVoucherRequest) returns (DeleteVoucherResponse); // Deletes a voucher by code
+  rpc UpdateVoucherRestrictions(UpdateVoucherRestrictionsRequest) returns (UpdateVoucherRestrictionsResponse); // Updates restrictions on a voucher
+  rpc GetVouchers(GetVouchersRequest) returns (GetVouchersResponse); // Retrieves a list of vouchers with filters and pagination
+
+  // User APIs
+  rpc ValidateVoucher(ValidateVoucherRequest) returns (ValidateVoucherResponse); // Validates if a voucher is applicable
+  rpc ApplyVoucher(ApplyVoucherRequest) returns (ApplyVoucherResponse); // Applies a voucher to a purchase
+}
+
+enum DiscountType {
+  FIXED = 0; // Fixed amount discount
+  PERCENTAGE = 1; // Percentage-based discount
+}
+
+message Voucher {
+  string code = 1; // Unique voucher code
+  DiscountType discount_type = 2; // Type of discount
+  double discount_value = 3; // Value of the discount
+  bool is_active = 4; // Indicates if the voucher is active
+  int32 usage_count = 5; // Number of times the voucher has been used
+  optional Restrictions restrictions = 6; // Optional restrictions applied to the voucher
+}
+
+message Restrictions {
+  optional bool new_users_only = 1; // Restricts voucher to new users
+  optional int32 max_uses_per_user = 2; // Maximum times a user can use this voucher
+  optional double min_purchase_requirement = 3; // Minimum amount required to use the voucher
+  optional double max_discount_cap = 4; // Max discount amount for percentage-based vouchers
+  repeated string applicable_services = 5; // List of services/plans the voucher applies to
+  optional bool has_applicable_services = 9;
+  optional string start_date = 6; // Start date of voucher validity (ISO 8601 format)
+  optional string expire_date = 7; // Expiry date of voucher validity (ISO 8601 format)
+  optional int32 global_usage_limit = 8; // Maximum total usage count across all users
+}
+
+// Admin Requests
+message CreateVoucherRequest {
+  string code = 1; // Unique voucher code
+  DiscountType discount_type = 2; // Type of discount
+  double discount_value = 3; // Value of the discount
+  optional Restrictions restrictions = 4;
+}
+
+message CreateVoucherResponse {
+  Voucher voucher = 1; // Response message confirming voucher creation
+}
+
+message DeleteVoucherRequest {
+  string code = 1; // Voucher code to be deleted
+}
+message DeleteVoucherResponse {
+  bool success = 1; // Response message confirming deletion
+}
+
+message UpdateVoucherRestrictionsRequest {
+  string code = 1; // Voucher code to update restrictions
+  optional bool is_active = 2;
+  Restrictions restrictions = 3; // New restrictions for the voucher
+}
+message UpdateVoucherRestrictionsResponse {
+  Voucher voucher = 1; // Response message confirming update
+}
+
+message GetVouchersRequest {
+  optional DiscountType discount_type = 1; // Filter by discount type
+  optional bool is_active = 2; // Filter by active status
+  optional string service_name = 3; // Filter by applicable service
+  optional int32 page_number = 4; // Pagination: page number
+  optional int32 page_size = 5; // Pagination: number of items per page
+}
+
+message GetVouchersResponse {
+  repeated Voucher vouchers = 1; // List of vouchers
+  int32 total_count = 2; // Total number of vouchers matching the filters
+}
+
+// User Requests
+message ValidateVoucherRequest {
+  string code = 1; // Voucher code to validate
+  string user_id = 2; // ID of the user trying to use the voucher
+  double purchase_amount = 3; // Amount of the purchase
+  string service_name = 4; // Service name where the voucher is applied
+}
+
+message ValidateVoucherResponse {
+  bool is_valid = 1; // Indicates if the voucher is valid for the given purchase
+  bool success = 2; // Validation message
+  double discount_amount = 3; // Discount amount applicable
+  double final_price = 4; // Final price after applying the discount
+}
+
+message ApplyVoucherRequest {
+  string code = 1; // Voucher code to apply
+  string user_id = 2; // ID of the user using the voucher
+  double purchase_amount = 3; // Amount of the purchase before discount
+  string service_name = 4; // Service name where the voucher is applied
+}
+
+message ApplyVoucherResponse {
+  bool success = 1; // Indicates if voucher application was successful
+  double discount_amount = 2; // Discount amount applicable
+  double final_price = 3; // Final price after applying the discount
+}
