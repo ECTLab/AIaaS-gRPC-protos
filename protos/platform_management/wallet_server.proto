@@ -25,6 +25,7 @@ service Wallet {
     rpc SubscribeStoragePlan(SubscribeStoragePlanRequest) returns (SubscribeStoragePlanResponse);
     rpc UpgradeStoragePlan(UpgradeStoragePlanRequest) returns (UpgradeStoragePlanResponse);
     rpc RenewStoragePlan(RenewStoragePlanRequest) returns (RenewStoragePlanResponse);
+    rpc GetTransactionCounts(GetTransactionCountsRequest) returns (GetTransactionCountsResponse);
 }
 
 
@@ -94,6 +95,13 @@ enum TransactionStatus {
     SUCCESSFUL = 2;
     FAILED = 3;
 }
+
+enum GroupByPeriod {
+    DAY = 0;
+    WEEK = 1;
+    MONTH = 2;
+}
+
 message Transaction {
     uint64 amount = 1; // in Rials ﷼
     google.protobuf.Timestamp created_at = 2; // UTC
@@ -243,4 +251,21 @@ message RenewStoragePlanRequest {
 
 message RenewStoragePlanResponse {
     UserStoragePlan user_storage_plan = 1;
+}
+
+message GetTransactionCountsRequest {
+    google.protobuf.Timestamp start_date = 1;
+    google.protobuf.Timestamp end_date = 2;
+    GroupByPeriod group_by = 3;
+    optional TransactionStatus status_filter = 4;
+    optional TransactionKind kind_filter = 5;
+}
+
+message TransactionCountData {
+    string period = 1; // Date string representing the period (e.g., "2024-01-15", "2024-W03", "2024-01")
+    uint64 count = 2;
+}
+
+message GetTransactionCountsResponse {
+    repeated TransactionCountData counts = 1;
 }
