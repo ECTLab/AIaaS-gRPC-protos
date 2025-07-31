@@ -35,6 +35,18 @@
             "proto_file_path": "protos/storage_management.proto",
             "host": "storage-management-grpc-server",
             "port": 50055
+        },
+        {
+            "name": "Ticketing",
+            "proto_file_path": "protos/platform_management/ticketing_server.proto",
+            "host": "ticketing_server",
+            "port": 50056
+        },
+        {
+            "name": "Discount",
+            "proto_file_path": "protos/platform_management/discount_server.proto",
+            "host": "discount_server",
+            "port": 50057
         }
     ]
 }
