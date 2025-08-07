@@ -26,6 +26,7 @@ service Wallet {
     rpc UpgradeStoragePlan(UpgradeStoragePlanRequest) returns (UpgradeStoragePlanResponse);
     rpc RenewStoragePlan(RenewStoragePlanRequest) returns (RenewStoragePlanResponse);
     rpc GetTransactionCounts(GetTransactionCountsRequest) returns (GetTransactionCountsResponse);
+    rpc GetTransactionCountsByStatus(GetTransactionCountsByStatusRequest) returns (GetTransactionCountsByStatusResponse);
 }
 
 
@@ -270,4 +271,18 @@ message TransactionCountData {
 
 message GetTransactionCountsResponse {
     repeated TransactionCountData counts = 1;
+}
+
+message GetTransactionCountsByStatusRequest {
+    optional google.protobuf.Timestamp start_date = 1;
+    optional google.protobuf.Timestamp end_date = 2;
+}
+
+message TransactionStatusCountData {
+    TransactionStatus status = 1;
+    uint64 count = 2;
+}
+
+message GetTransactionCountsByStatusResponse {
+    repeated TransactionStatusCountData status_counts = 1;
 }
