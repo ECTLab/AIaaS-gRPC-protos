@@ -75,7 +75,9 @@ message GetWalletBalanceResponse {
 
 
 message GetUsersWalletBalanceRequest {
-    repeated string user_ids = 1;
+    repeated string user_ids = 1; // if empty, returns all users
+    optional uint64 min_balance = 2; // in Rials ﷼
+    optional uint64 max_balance = 3; // in Rials ﷼
 }
 
 message GetUsersWalletBalanceResponse {

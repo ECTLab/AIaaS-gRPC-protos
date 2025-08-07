@@ -195,7 +195,9 @@ message GetVolumeResponse {
 }
 
 message GetUsersVolumeReportRequest {
-    repeated string usernames = 1;
+    repeated string usernames = 1; // if empty, returns all users
+    optional float min_usage_percentage = 2; // minimum usage percentage (0-100)
+    optional float max_usage_percentage = 3; // maximum usage percentage (0-100)
 }
 
 message GetUsersVolumeReportResponse {
