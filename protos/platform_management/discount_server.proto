@@ -69,6 +69,7 @@ message UpdateVoucherRestrictionsResponse {
 }
 
 message GetVouchersRequest {
+  optional string code = 6; // Filter by voucher code
   optional DiscountType discount_type = 1; // Filter by discount type
   optional bool is_active = 2; // Filter by active status
   optional string service_name = 3; // Filter by applicable service
